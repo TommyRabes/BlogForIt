@@ -23,22 +23,36 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Install Node packages"
-          command: "npm install"
+          name: Install Node packages
+          command: npm install
       - run:
-          name: "Angular build"
-          command: "npm run build"
+          name: Angular build
+          command: npm run build
   unit-test:
     docker:
       - image: cimg/node:18.12.1
     steps:
       - checkout
       - run:
-          name: "Install Node packages"
-          command: "npm install"
+          name: Install Node packages
+          command: npm install
       - run:
-          name: "Unit tests"
-          command: "npm run test"
+          name: Unit tests
+          command: npm run test
+  deploy:
+    docker:
+      - image: cimg/node:18.12.1
+    steps:
+      - checkout
+      - run:
+          name: Install Node packages
+          command: npm install
+      - run:
+          name: Build to public folder
+          command: npm run build
+      - run:
+          name: Firebase hosting
+          command: ./node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_DEPLOY_TOKEN
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -49,3 +63,7 @@ workflows:
       - build:
           requires:
             - say-hello
+      - deploy:
+          context: Multi-Business
+          requires:
+            - build
