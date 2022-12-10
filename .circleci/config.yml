@@ -97,3 +97,6 @@ workflows:
           context: Multi-Business
           requires:
             - build
+          filters:
+            branches:
+              only: main
