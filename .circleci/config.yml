@@ -39,6 +39,25 @@ jobs:
       - run:
           name: Unit tests
           command: npm run test
+  request-preview:
+    docker:
+      - image: cimg/base
+    steps:
+      - checkout
+  feature-preview:
+    docker:
+      - image: cimg/node:18.12.1
+    steps:
+      - checkout
+      - run:
+          name: Install Node packages
+          command: npm install
+      - run:
+          name: Build to public folder
+          command: npm run build
+      - run:
+          name: Firebase preview channel
+          command: ./node_modules/.bin/firebase hosting:channel:deploy $CIRCLE_BRANCH --token=$FIREBASE_DEPLOY_TOKEN
   deploy:
     docker:
       - image: cimg/node:18.12.1
@@ -63,6 +82,17 @@ workflows:
       - build:
           requires:
             - say-hello
+      - request-preview:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              only: /^MB-\d+-.+/
+      - feature-preview:
+          context: Multi-Business
+          requires:
+            - request-preview
       - deploy:
           context: Multi-Business
           requires:
