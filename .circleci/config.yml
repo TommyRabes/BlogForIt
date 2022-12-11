@@ -2,21 +2,10 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+orbs:
+  browser-tools: circleci/browser-tools@1.4.0
+
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World! Even though you will never see this message"
   build:
     docker:
       - image: cimg/node:18.12.1
@@ -30,15 +19,17 @@ jobs:
           command: npm run build
   unit-test:
     docker:
-      - image: cimg/node:18.12.1
+      - image: cimg/node:18.12.1-browsers
     steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - checkout
       - run:
           name: Install Node packages
           command: npm install
       - run:
           name: Unit tests
-          command: npm run test
+          command: npm run test:unit:ci
   request-preview:
     docker:
       - image: cimg/base
@@ -78,14 +69,14 @@ jobs:
 workflows:
   build-dev-workflow:
     jobs:
-      - say-hello
-      - build:
+      - build
+      - unit-test:
           requires:
-            - say-hello
+            - build
       - request-preview:
           type: approval
           requires:
-            - build
+            - unit-test
           filters:
             branches:
               only: /^MB-\d+-.+/
@@ -96,7 +87,7 @@ workflows:
       - deploy:
           context: Multi-Business
           requires:
-            - build
+            - unit-test
           filters:
             branches:
               only: main
