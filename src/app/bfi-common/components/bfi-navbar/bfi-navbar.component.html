@@ -1,11 +1,12 @@
-<div>
-    <div id="home-logo">BlogIt</div>
+<div class="row">
+    <div id="home-logo"><h2>BlogIt</h2></div>
     <div id="navbar-links">
-        <a class="nav-link">Home</a>
-        <a class="nav-link">Web development</a>
-        <a class="nav-link">DevOps</a>
+        <app-bfi-navlink [name]="'Home'"></app-bfi-navlink>
+        <app-bfi-navlink [name]="'Web development'" [color]="'cornflowerblue'"></app-bfi-navlink>
+        <app-bfi-navlink [name]="'DevOps'" [color]="'orangered'"></app-bfi-navlink>
     </div>
-    <div id="search-button">
+    <div id="action-buttons">
+        <i class="icon menu-icon"><a target="_blank" href="https://icons8.com/icon/82853/menu">Menu</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></i>
         <i class="icon search-icon"></i>
     </div>
 </div>

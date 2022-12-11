@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BfiNavbarComponent } from '../bfi-navbar/bfi-navbar.component';
+import { BfiNavlinkComponent } from '../bfi-navlink/bfi-navlink.component';
 
 import { BfiHeaderComponent } from './bfi-header.component';
 
@@ -10,7 +11,7 @@ describe('BfiHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BfiHeaderComponent, BfiNavbarComponent ]
+      declarations: [ BfiHeaderComponent, BfiNavbarComponent, BfiNavlinkComponent ]
     })
     .compileComponents();
 

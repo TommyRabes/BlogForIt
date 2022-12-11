@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BfiNavlinkComponent } from '../bfi-navlink/bfi-navlink.component';
 
 import { BfiNavbarComponent } from './bfi-navbar.component';
 
@@ -9,7 +10,7 @@ describe('BfiNavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BfiNavbarComponent ]
+      declarations: [ BfiNavbarComponent, BfiNavlinkComponent ]
     })
     .compileComponents();
 
@@ -30,16 +31,19 @@ describe('BfiNavbarComponent', () => {
   it('should contain navigation links', () => {
     const linksContainer = hostElement.querySelector('div#navbar-links');
     expect(linksContainer).toBeTruthy();
-    const links = linksContainer?.querySelectorAll('a.nav-link');
+    const links = linksContainer?.querySelectorAll('app-bfi-navlink');
     expect(links).toHaveSize(3);
-    expect(links?.item(0).textContent).toBe('Home');
-    expect(links?.item(1).textContent).toBe('Web development');
-    expect(links?.item(2).textContent).toBe('DevOps');
   });
 
   it('should contain a search button', () => {
-    const searchBtn = hostElement.querySelector('div#search-button');
+    const searchBtn = hostElement.querySelector('div#action-buttons');
     expect(searchBtn).toBeTruthy();
     expect(searchBtn?.querySelector('i.icon.search-icon')).toBeTruthy();
+  });
+
+  it('should contain a menu button', () => {
+    const searchBtn = hostElement.querySelector('div#action-buttons');
+    expect(searchBtn).toBeTruthy();
+    expect(searchBtn?.querySelector('i.icon.menu-icon')).toBeTruthy();
   });
 });

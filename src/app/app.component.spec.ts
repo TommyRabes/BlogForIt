@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { BfiHeaderComponent } from './bfi-common/components/bfi-header/bfi-header.component';
 import { BfiNavbarComponent } from './bfi-common/components/bfi-navbar/bfi-navbar.component';
+import { BfiNavlinkComponent } from './bfi-common/components/bfi-navlink/bfi-navlink.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -9,7 +10,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         BfiHeaderComponent,
-        BfiNavbarComponent
+        BfiNavbarComponent,
+        BfiNavlinkComponent
       ],
     }).compileComponents();
   });

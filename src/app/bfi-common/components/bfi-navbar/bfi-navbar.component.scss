@@ -1,0 +1,49 @@
+:host {
+    .row > div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #home-logo {
+        flex-grow: 1;
+
+        h2 {
+            margin: 0;
+        }
+    }
+
+    #navbar-links {
+        flex-grow: 0;
+        justify-content: space-around;
+        width: 500px;
+
+        app-bfi-navlink {
+            flex-basis: 33.33%;
+            border-left: 1px solid gainsboro;
+
+            &:last-child {
+                border-right: 1px solid gainsboro;
+            }
+        }
+    }
+
+    #action-buttons {
+        flex-grow: 1;
+        flex-direction: row-reverse;
+
+        i {
+            margin: 0 5px;
+        }
+
+        .search-icon {
+            cursor: pointer;
+            content: url(../../../../assets/icons/svg/search.svg);
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            content: url(../../../../assets/icons/svg/menu.svg);
+        }
+    }
+}
