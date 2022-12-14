@@ -23,9 +23,24 @@ describe('BfiHeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(hostElement.classList).not.toContain('out-of-viewport');
   });
 
   it('should use one BfiNavbar component', () => {
     expect(hostElement.querySelectorAll('app-bfi-navbar')).toHaveSize(1);
+  });
+
+  it('should be hidden after scrolling down', async () => {
+    component.updateScrollPosition([0, 200]);
+    fixture.detectChanges();
+    expect(hostElement.classList).toContain('out-of-viewport');
+  });
+
+  it('should be displayed after scrolling up', () => {
+    component.updateScrollPosition([0, 200]);
+    fixture.detectChanges();
+    component.updateScrollPosition([0, 100]);
+    fixture.detectChanges();
+    expect(hostElement.classList).not.toContain('out-of-viewport');
   });
 });

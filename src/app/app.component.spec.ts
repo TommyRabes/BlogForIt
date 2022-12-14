@@ -12,7 +12,7 @@ describe('AppComponent', () => {
         BfiHeaderComponent,
         BfiNavbarComponent,
         BfiNavlinkComponent
-      ],
+      ]
     }).compileComponents();
   });
 
