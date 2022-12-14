@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { BfiHeaderComponent } from './bfi-common/components/bfi-header/bfi-header.component';
+import { BfiNavbarComponent } from './bfi-common/components/bfi-navbar/bfi-navbar.component';
+import { BfiNavlinkComponent } from './bfi-common/components/bfi-navlink/bfi-navlink.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        BfiHeaderComponent,
+        BfiNavbarComponent,
+        BfiNavlinkComponent
+      ]
     }).compileComponents();
   });
 
@@ -27,5 +33,16 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.content span')?.textContent).toContain('BlogForIt app is running!');
+  });
+
+  it('should use one BfiHeader component on top of the page', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelectorAll('app-bfi-header')).toHaveSize(1);
+    const header = compiled.querySelector('app-bfi-header');
+    expect(header).toBeTruthy();
+    expect(header).toBe(compiled.firstElementChild);
+    expect(header?.id).toBe('header');
   });
 });

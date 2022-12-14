@@ -1,0 +1,23 @@
+:host {
+    --hover-color: black;
+
+    a.nav-link {
+        display: flex;
+        cursor: pointer;
+        height: 50px;
+        font-weight: 600;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        transition: color 0.35s ease;
+
+        &:hover {
+            color: var(--hover-color);
+        }
+    }
+
+    .band {
+        height: 2px;
+        width: 100%;
+    }
+}
