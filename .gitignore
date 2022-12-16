@@ -43,4 +43,8 @@ testem.log
 Thumbs.db
 
 # Firebase
-.firebase/
+/.firebase
+
+# Cypress
+cypress/donwloads
+cypress/videos

@@ -30,6 +30,17 @@ jobs:
       - run:
           name: Unit tests
           command: npm run test:unit:ci
+  end-to-end:
+    docker:
+      - image: cypress/base:18.12.1
+    steps:
+      - checkout
+      - run:
+          name: Install Node packages
+          command: npm install
+      - run:
+          name: End-to-end tests
+          command: npm run e2e:ci
   request-preview:
     docker:
       - image: cimg/base
@@ -73,10 +84,14 @@ workflows:
       - unit-test:
           requires:
             - build
+      - end-to-end:
+          requires:
+            - unit-test
       - request-preview:
           type: approval
           requires:
             - unit-test
+            - end-to-end
           filters:
             branches:
               only: /^MB-\d+-.+/
@@ -88,6 +103,7 @@ workflows:
           context: Multi-Business
           requires:
             - unit-test
+            - end-to-end
           filters:
             branches:
               only: main
