@@ -4,6 +4,8 @@ import { BaseImageComponent } from './bfi-common/components/base-image/base-imag
 import { BfiHeaderComponent } from './bfi-common/components/bfi-header/bfi-header.component';
 import { BfiNavbarComponent } from './bfi-common/components/bfi-navbar/bfi-navbar.component';
 import { BfiNavlinkComponent } from './bfi-common/components/bfi-navlink/bfi-navlink.component';
+import { TagComponent } from './bfi-common/components/tag/tag.component';
+import { BulletComponent } from './bfi-common/components/bullet/bullet.component';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -16,7 +18,9 @@ describe('AppComponent', () => {
         BfiHeaderComponent,
         BfiNavbarComponent,
         BfiNavlinkComponent,
-        BaseImageComponent
+        BaseImageComponent,
+        TagComponent,
+        BulletComponent
       ]
     }).compileComponents();
 
@@ -47,8 +51,8 @@ describe('AppComponent', () => {
     expect(header?.id).toBe('header');
   });
 
-  it('should use one BaseImage component in the main block of the page', () => {
+  it('should use two BaseImage components in the main block of the page', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelectorAll('main app-base-image')).toHaveSize(1);
+    expect(compiled.querySelectorAll('main app-base-image')).toHaveSize(2);
   });
 });

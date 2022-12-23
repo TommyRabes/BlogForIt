@@ -1,0 +1,15 @@
+:host {
+    display: inline-block;
+
+    .tag {
+        margin: 3px;
+        padding: 2px 7px 4px 7px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    app-bullet {
+        margin: 0 5px 0 0;
+    }
+}

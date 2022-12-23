@@ -40,7 +40,7 @@ jobs:
           command: npm install
       - run:
           name: End-to-end tests
-          command: npm run e2e:ci
+          command: npm run test:e2e:ci
   request-preview:
     docker:
       - image: cimg/base

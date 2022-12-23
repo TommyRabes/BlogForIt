@@ -4,6 +4,8 @@ import { BfiNavbarComponent } from './components/bfi-navbar/bfi-navbar.component
 import { BfiHeaderComponent } from './components/bfi-header/bfi-header.component';
 import { BfiNavlinkComponent } from './components/bfi-navlink/bfi-navlink.component';
 import { BaseImageComponent } from './components/base-image/base-image.component';
+import { TagComponent } from './components/tag/tag.component';
+import { BulletComponent } from './components/bullet/bullet.component';
 
 
 
@@ -12,14 +14,17 @@ import { BaseImageComponent } from './components/base-image/base-image.component
     BfiNavbarComponent,
     BfiHeaderComponent,
     BfiNavlinkComponent,
-    BaseImageComponent
+    BaseImageComponent,
+    TagComponent,
+    BulletComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
     BfiHeaderComponent,
-    BaseImageComponent
+    BaseImageComponent,
+    TagComponent
   ]
 })
 export class BfiCommonModule { }
