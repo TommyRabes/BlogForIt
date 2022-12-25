@@ -29,7 +29,11 @@ describe('TagComponent', () => {
   it('should display tag name in black when a bright color is forwarded', () => {
     component.label = 'LIFESTYLE';
     component.color = Color.fromHex('#ffffff');
+
+    expect(component.textColor).toEqual(Color.black());
+
     spyOn(component.color, 'toCss').and.returnValue('rgba(255, 255, 255, 1)');
+    spyOn(component.textColor, 'toCss').and.returnValue('rgba(0, 0, 0, 1)');
 
     fixture.detectChanges();
 
@@ -43,7 +47,11 @@ describe('TagComponent', () => {
   it('should display tag name in white when a dark color is forwarded', () => {
     component.label = 'LIFESTYLE';
     component.color = Color.fromHex('#000000');
+
+    expect(component.textColor).toEqual(Color.white());
+
     spyOn(component.color, 'toCss').and.returnValue('rgba(0, 0, 0, 1)');
+    spyOn(component.textColor, 'toCss').and.returnValue('rgba(255, 255, 255, 1)');
 
     fixture.detectChanges();
 

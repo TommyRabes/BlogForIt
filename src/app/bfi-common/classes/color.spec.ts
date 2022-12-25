@@ -5,7 +5,7 @@ describe('Color', () => {
   it('should create an instance', () => {
     const color = new Color();
     expect(color).toBeTruthy();
-    expect(color.parser).toBeTruthy();
+    expect(Color.parser).toBeTruthy();
     expect(color.red).toBe(0);
     expect(color.green).toBe(0);
     expect(color.blue).toBe(0);
@@ -43,6 +43,10 @@ describe('Color', () => {
   });
 
   it('should create a Color from a hexadecimal number', () => {
+    spyOn(Color.parser, 'parse')
+      .withArgs('7e').and.returnValue(126)
+      .withArgs('a5').and.returnValue(165)
+      .withArgs('91').and.returnValue(145);
     const color = new Color('7ea591');
     expect(color.red).toBe(126);
     expect(color.green).toBe(165);
@@ -51,6 +55,10 @@ describe('Color', () => {
   });
 
   it('should parse a Color from a hexadecimal number', () => {
+    spyOn(Color.parser, 'parse')
+      .withArgs('D6').and.returnValue(214)
+      .withArgs('29').and.returnValue(41)
+      .withArgs('3E').and.returnValue(62);
     const color = Color.fromHex('D6293E');
     expect(color.red).toBe(214);
     expect(color.green).toBe(41);
@@ -59,11 +67,11 @@ describe('Color', () => {
   });
 
   it(`should create a Color from a hexadecimal number prefixed by '#'`, () => {
-    const color = new Color('#7ea591');
-    spyOn(color.parser, 'parse')
+    spyOn(Color.parser, 'parse')
       .withArgs('7e').and.returnValue(126)
       .withArgs('a5').and.returnValue(165)
       .withArgs('91').and.returnValue(145);
+    const color = new Color('#7ea591');
     expect(color.red).toBe(126);
     expect(color.green).toBe(165);
     expect(color.blue).toBe(145);
@@ -71,8 +79,8 @@ describe('Color', () => {
   });
 
   it(`should create a Color from a 3-characters long hexadecimal`, () => {
+    spyOn(Color.parser, 'parse').withArgs('ff').and.returnValue(255);
     const color = new Color('#fff');
-    spyOn(color.parser, 'parse').withArgs('ff').and.returnValue(255);
     expect(color.red).toBe(255);
     expect(color.green).toBe(255);
     expect(color.blue).toBe(255);
@@ -80,10 +88,10 @@ describe('Color', () => {
   });
 
   it(`should create a Color with its alpha value from a 4-characters long hexadecimal`, () => {
-    const color = new Color('#fff5');
-    spyOn(color.parser, 'parse')
+    spyOn(Color.parser, 'parse')
       .withArgs('ff').and.returnValue(255)
       .withArgs('55').and.returnValue(85);
+    const color = new Color('#fff5');
     expect(color.red).toBe(255);
     expect(color.green).toBe(255);
     expect(color.blue).toBe(255);
@@ -92,7 +100,7 @@ describe('Color', () => {
 
   it(`should create a Color with its alpha value from a 8-characters long hexadecimal`, () => {
     const color = new Color('#ffffff55');
-    spyOn(color.parser, 'parse')
+    spyOn(Color.parser, 'parse')
       .withArgs('ff').and.returnValue(255)
       .withArgs('55').and.returnValue(85);
     expect(color.red).toBe(255);
@@ -103,6 +111,11 @@ describe('Color', () => {
 
   it(`should throw an error while creating a Color from a invalid color hexadecimal`, () => {
     expect(() => new Color('7ea591d53a8511')).toThrowError(errors.INVALID_COLOR_HEXADECIMAL_REPRESENTATION);
+  });
+
+  it(`should throw an error while creating a Color from an unparseable color hexadecimal`, () => {
+    spyOn(Color.parser, 'parse').and.returnValue(NaN);
+    expect(() => new Color('#ffffff55')).toThrowError(errors.INVALID_COLOR_HEXADECIMAL_REPRESENTATION);
   });
 
   it('should return a css rgba representation', () => {

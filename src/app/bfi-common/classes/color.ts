@@ -1,13 +1,15 @@
 import { HexadecimalParserService } from "../services/hexadecimal-parser.service";
 import { errors } from '../resources';
 import { colors } from '../constants';
+import { Strings } from "../util/strings";
+import { Numbers } from "../util/numbers";
 
 export class Color {
-    $red: number = 0;
-    $green: number = 0;
-    $blue: number = 0;
-    $alpha: number = 255;
-    readonly parser: HexadecimalParserService = new HexadecimalParserService();
+    private $red: number = 0;
+    private $green: number = 0;
+    private $blue: number = 0;
+    private $alpha: number = 255;
+    static readonly parser: HexadecimalParserService = new HexadecimalParserService();
 
     get red(): number {
         return this.$red;
@@ -50,46 +52,76 @@ export class Color {
     public constructor(red: number, green: number, blue: number);
     public constructor(red: number, green: number, blue: number, alpha: number);
     constructor(...args: any[]) {
-        const colorValues = [0, 0, 0, 255];
-        if (args.length === 1) {
-            const arg = args[0] as string;
-            let hex = arg.startsWith('#') ? arg.slice(1) : arg;
-
-            if (hex.length === 3 || hex.length === 4) {
-                hex = this.replicateDigits(hex);
-            }
-
-            if (hex.length !== 6 && hex.length !== 8) {
-                throw new Error(errors.INVALID_COLOR_HEXADECIMAL_REPRESENTATION);
-            }
-
-            const parsedValues = hex.match(/.{1,2}/g)?.map(subhex => this.parser.parse(subhex)) || [];
-            colorValues.splice(0, hex.length/2, ...parsedValues);
-        } else {
-            colorValues.splice(0, args.length, ...(args as number[]));
-        }
-        (['red', 'green', 'blue', 'alpha'] as (keyof Omit<Color, 'parser' | 'toCss' | 'luminance' | 'contrast'>)[])
+        const colorValues = this.parseRGBA(...args);
+        (['red', 'green', 'blue', 'alpha'] as (keyof Omit<Color, 'toCss' | 'luminance' | 'contrast'>)[])
             .forEach((color, index) => {
                 this[color] = colorValues[index];
             });
+    }
+
+    private parseRGBA(...args: any[]): number[] {
+        const colorValues = [0, 0, 0, 255];
+        if (args.length === 1) {
+            const rgbaCode = this.formatRGBA(args[0] as string);
+            const parsedValues = this.parseRGBAString(rgbaCode);
+            colorValues.splice(0, rgbaCode.length/2, ...parsedValues);
+        } else {
+            colorValues.splice(0, args.length, ...(args as number[]));
+        }
+        return colorValues;
+    }
+
+    private formatRGBA(rgbaCode: string): string {
+        let hex = rgbaCode.startsWith('#') ? rgbaCode.slice(1) : rgbaCode;
+
+        if (hex.length === 3 || hex.length === 4) {
+            hex = this.replicateDigits(hex);
+        }
+
+        if (hex.length !== 6 && hex.length !== 8) {
+            throw new Error(errors.INVALID_COLOR_HEXADECIMAL_REPRESENTATION);
+        }
+
+        return hex;
+    }
+
+    private parseRGBAString(rgbaCode: string): number[] {
+        return Strings.chunkSplit(rgbaCode, 2).map(subhex => {
+            const colorValue = Color.parser.parse(subhex);
+            if (isNaN(colorValue)) {
+                throw new Error(errors.INVALID_COLOR_HEXADECIMAL_REPRESENTATION);
+            }
+            return colorValue;
+        });
+    }
+
+    private replicateDigits(shorthand: string) {
+        let expandedNotation = '';
+        for (const digit of shorthand) {
+            expandedNotation = expandedNotation + digit.repeat(2);
+        }
+        return expandedNotation;
     }
 
     toCss(): string {
         return `rgba(${this.red}, ${this.green}, ${this.blue}, ${+(this.alpha/255).toFixed(2)})`;
     }
 
-    // https://www.w3.org/WAI/WCAG21/Techniques/general/G18.html
-    luminance(): number {
-        const { factors, parameters } = colors.luminance;
-        return +(Object.keys(factors) as ('red'|'green'|'blue')[]).map(color => {
-            const colorValue = this[color] / 255;
-            return (colorValue <= parameters.condition ? colorValue / parameters.divider : ((colorValue + parameters.complement) / parameters.divider2) ** parameters.power) * factors[color];
-        }).reduce((c, p) => c + p, 0).toFixed(3);
-    }
-
     contrast(color: Color): number {
         const luminances = [this.luminance(), color.luminance()];
         return +((Math.max(...luminances) + 0.05) / (Math.min(...luminances) + 0.05)).toFixed(2);
+    }
+
+    // https://www.w3.org/WAI/WCAG21/Techniques/general/G18.html
+    luminance(): number {
+        const colorsLuminance = (['red', 'green', 'blue'] as ('red'|'green'|'blue')[]).map(color => this.getPrimaryColorLuminance(color));
+        return +Numbers.sum(colorsLuminance).toFixed(3);
+    }
+
+    private getPrimaryColorLuminance(primaryColor: 'red'|'green'|'blue'): number {
+        const { factors, parameters } = colors.luminance;
+        const colorValue = this[primaryColor] / 255;
+        return (colorValue <= parameters.condition ? colorValue / parameters.divider : ((colorValue + parameters.complement) / parameters.divider2) ** parameters.power) * factors[primaryColor];
     }
 
     private validateColorValue(color: number): void {
@@ -99,14 +131,6 @@ export class Color {
         if (color > 255) {
             throw new Error(errors.COLOR_VALUE_GREATER_THAN_255);
         }
-    }
-
-    private replicateDigits(shorthand: string) {
-        let expandedNotation = '';
-        for (const digit of shorthand) {
-            expandedNotation = expandedNotation + digit.repeat(2);
-        }
-        return expandedNotation;
     }
 
     static fromHex(hex: string): Color {
