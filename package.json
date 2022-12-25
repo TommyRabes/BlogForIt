@@ -9,8 +9,8 @@
     "watch": "ng build --watch --configuration development",
     "test:unit": "ng test",
     "test:unit:ci": "ng test --no-watch --no-progress",
-    "e2e": "ng e2e",
-    "e2e:ci": "ng e2e --no-watch",
+    "test:e2e": "ng e2e",
+    "test:e2e:ci": "ng e2e --no-watch",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },

@@ -1,0 +1,5 @@
+<div
+    [style.background-color]="color.toCss()"
+    [style.color]="textColor.toCss()"
+    class="tag"
+><app-bullet *ngIf="bullet" [color]="textColor"></app-bullet>{{ label.toUpperCase() }}</div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { Color } from './bfi-common/classes/color';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBNv0LgFz-ikfUxdTSy4xGiAf57t02qtsc",
@@ -24,4 +25,6 @@ const analytics = getAnalytics(app);
 })
 export class AppComponent {
   title = 'BlogForIt';
+
+  colors: Color[] = [Color.fromHex('F7C32E'), Color.fromHex('D6293E')];
 }

@@ -6,11 +6,17 @@
 
     <div class="content">
         <span>BlogForIt app is running!</span>
-        <app-base-image
+        <div>
+            <app-base-image
             [src]="'https://blogzine.webestica.com/assets/images/blog/4by3/01.jpg'"
             [height]="250"
             [width]="300"
             [radius]="10">
-        </app-base-image>
+            </app-base-image>
+            <app-base-image></app-base-image>
+        </div>
+        <app-tag [label]="'Photography'"></app-tag>
+        <app-tag [label]="'Technology'" [color]="colors[0]" [bullet]="true"></app-tag>
+        <app-tag [label]="'Travel'" [color]="colors[1]"></app-tag>
     </div>
 </main>
