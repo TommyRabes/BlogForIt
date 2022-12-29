@@ -8,8 +8,6 @@ import { Dimension } from '../../classes/dimension';
 })
 export class BaseImageComponent {
 
-  // static Omit = <K extends keyof BaseImageComponent>(keys: K[]): new () => Omit<BaseImageComponent, typeof keys[number]> => BaseImageComponent;
-
   protected $src: string = '../../../../assets/images/posts/default-post-cover.png';
   protected $radius: number = 0;
   protected $dimension: Dimension = new Dimension(400, 400);

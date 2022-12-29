@@ -2,8 +2,6 @@ import { Component, Input } from '@angular/core';
 import { BaseImageComponent } from '../base-image/base-image.component';
 import { Dimension } from '../../classes/dimension';
 
-// const Omit = <T, K extends keyof T>(Class: new () => T, keys: K[]): new () => Omit<T, typeof keys[number]> => Class;
-
 @Component({
   selector: 'app-profile-image',
   templateUrl: '../base-image/base-image.component.html',
