@@ -6,6 +6,7 @@ import { BfiNavbarComponent } from './bfi-common/components/bfi-navbar/bfi-navba
 import { BfiNavlinkComponent } from './bfi-common/components/bfi-navlink/bfi-navlink.component';
 import { TagComponent } from './bfi-common/components/tag/tag.component';
 import { BulletComponent } from './bfi-common/components/bullet/bullet.component';
+import { ProfileImageComponent } from './bfi-common/components/profile-image/profile-image.component';
 
 describe('AppComponent', () => {
   let app: AppComponent;
@@ -20,7 +21,8 @@ describe('AppComponent', () => {
         BfiNavlinkComponent,
         BaseImageComponent,
         TagComponent,
-        BulletComponent
+        BulletComponent,
+        ProfileImageComponent
       ]
     }).compileComponents();
 

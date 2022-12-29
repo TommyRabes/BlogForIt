@@ -15,8 +15,17 @@
             </app-base-image>
             <app-base-image></app-base-image>
         </div>
+
         <app-tag [label]="'Photography'"></app-tag>
         <app-tag [label]="'Technology'" [color]="colors[0]" [bullet]="true"></app-tag>
         <app-tag [label]="'Travel'" [color]="colors[1]"></app-tag>
+
+        <div>
+            <app-profile-image></app-profile-image>
+            <app-profile-image
+                [src]="'https://blogzine.webestica.com/assets/images/avatar/01.jpg'"
+                [size]="40">
+            </app-profile-image>
+        </div>
     </div>
 </main>

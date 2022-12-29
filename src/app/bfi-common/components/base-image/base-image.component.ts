@@ -7,8 +7,12 @@ import { Dimension } from '../../classes/dimension';
   styleUrls: ['./base-image.component.scss']
 })
 export class BaseImageComponent {
-  private $src: string = '../../../../assets/images/posts/default-post-cover.png';
-  private $radius: number = 0;
+
+  // static Omit = <K extends keyof BaseImageComponent>(keys: K[]): new () => Omit<BaseImageComponent, typeof keys[number]> => BaseImageComponent;
+
+  protected $src: string = '../../../../assets/images/posts/default-post-cover.png';
+  protected $radius: number = 0;
+  protected $dimension: Dimension = new Dimension(400, 400);
 
   get src(): string {
     return this.$src;
@@ -34,19 +38,21 @@ export class BaseImageComponent {
 
   @Input('width')
   set width(width: number) {
-    if (this.dimension.width != width) {
-      this.dimension = new Dimension(width, this.dimension.height);
+    if (this.$dimension.width != width) {
+      this.$dimension = new Dimension(width, this.$dimension.height);
     }
   }
 
   @Input('height')
   set height(height: number) {
-    if (this.dimension.height != height) {
-      this.dimension = new Dimension(this.dimension.width, height);
+    if (this.$dimension.height != height) {
+      this.$dimension = new Dimension(this.$dimension.width, height);
     }
   }
 
-  dimension: Dimension = new Dimension(400, 400);
+  get dimension(): Dimension {
+    return this.$dimension;
+  }
 
   getStyle(): { [cssProperty: string]: string } {
     return {

@@ -48,3 +48,6 @@ Thumbs.db
 # Cypress
 cypress/donwloads
 cypress/videos
+
+# Assets
+src/assets/**/*.zip

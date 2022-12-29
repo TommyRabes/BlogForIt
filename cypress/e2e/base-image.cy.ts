@@ -11,6 +11,7 @@ describe('BaseImage tests', () => {
         cy.visit('/');
         cy.get('main .content app-base-image .img').eq(1).should('have.css', 'width', '400px');
         cy.get('main .content app-base-image .img').eq(1).should('have.css', 'height', '400px');
+        cy.get('main .content app-base-image:nth-child(2) .img[style*="assets/images/posts/default-post-cover.png"]');
         cy.get('main .content app-base-image .img').eq(1).should('have.css', 'border-radius', '0px');
     });
 });
