@@ -6,6 +6,7 @@ import { BfiNavlinkComponent } from './components/bfi-navlink/bfi-navlink.compon
 import { BaseImageComponent } from './components/base-image/base-image.component';
 import { TagComponent } from './components/tag/tag.component';
 import { BulletComponent } from './components/bullet/bullet.component';
+import { ProfileImageComponent } from './components/profile-image/profile-image.component';
 
 
 
@@ -16,7 +17,8 @@ import { BulletComponent } from './components/bullet/bullet.component';
     BfiNavlinkComponent,
     BaseImageComponent,
     TagComponent,
-    BulletComponent
+    BulletComponent,
+    ProfileImageComponent
   ],
   imports: [
     CommonModule
@@ -24,7 +26,8 @@ import { BulletComponent } from './components/bullet/bullet.component';
   exports: [
     BfiHeaderComponent,
     BaseImageComponent,
-    TagComponent
+    TagComponent,
+    ProfileImageComponent
   ]
 })
 export class BfiCommonModule { }
